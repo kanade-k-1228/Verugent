@@ -3,21 +3,13 @@ extern crate verugent;
 use verugent::vcore::*;
 
 fn main() {
-	axifull();
-}
+    let mut al = VModule::new("axi_full_interface");
+    let clk = al.input("clk", 0);
+    let rst = al.input("rst", 0);
 
-fn axifull() {
-	let mut al = VModule::new("axi_full_interface");
-	let clk = al.Input("clk", 0);
-	let rst = al.Input("rst", 0);
+    let mut axi = Axi4Slave::new(clk, rst);
+    axi.order_reg_set(64);
+    al.axi(axi);
 
-	let mut axi = AXIS_new(clk, rst);
-	//axi.mem_if();
-	axi.OrderRegSet(64);
-
-	al.AXI(axi);
-
-	al.endmodule();
-	al.genPrint();
-	//al.genFile("axifull.v");
+    println!("{}", al.gen());
 }

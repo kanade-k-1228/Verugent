@@ -4,12 +4,11 @@ mod tests {
     #[test]
     fn it_works() {
         let mut m = VModule::new("LED");
-        m.Input("CLK", 1);
-        m.Input("RST", 1);
-        assert!(!m.endmodule().is_empty(), "Code not generated successfully...");
+        m.input("CLK", 1);
+        m.input("RST", 1);
+        assert!(!m.gen().is_empty(), "Code not generated successfully...");
     }
 }
 
+pub mod bus;
 pub mod vcore;
-
-pub mod check;
